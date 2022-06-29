@@ -1,0 +1,122 @@
+
+<h2>HABILIDADES2</h2>
+<button class="btn btn-lg btn-outline-primary" (click)="openSkill(content)">Agregar</button>
+
+<table class="table">
+
+  <thead class="thead-light">
+    <tr>
+
+      <th scope="col">Img</th>
+      <th scope="col">Tecnologia</th>
+      <th scope="col">Porcentaje</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let habilidad of habilidades">
+
+      <img src="{{habilidad.img}}" accept="image/*">
+      <td>{{habilidad.tecnologia}}</td>
+      <!-- <td>{{habilidad.porcentaje}}</td> -->
+      <div class="progress-bar bg-success   progress-bar-striped" role="progressbar"
+        attr.style="width:{{habilidad.porcentaje}}%" aria-valuenow="25" aria-valuemin="" aria-valuemax="100">
+      </div>
+
+      <td>
+        <button class="btn btn-primary" (click)="openEdit(contentEdit,habilidad)"> Edit </button>
+        <button class="btn btn-danger" (click)="openDelete(contentDelete,habilidad)"> Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Bienvenid@!</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <form [formGroup]="editForm">
+
+      <label>tecnologia </label>
+      <input type="text" name="tecnologia" id="" class="form-control" formControlName="tecnologia" value="">
+
+      <label>porcentaje</label>
+      <input type="range" class="form-range" formControlName="porcentaje" id="customRange1">
+
+      <label>img</label>
+      <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file" (onFileChanged)="obtener($event)"
+        class="form-control" placeholder="" formControlName="img">
+
+    </form>
+    <!-- <button type="button" class="btn btn-danger" (click)=guardarSkill()>Cerrar</button> -->
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" (click)="guardarSkill()">Agregar</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title2">Editar Habilidad</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" novalidate>
+      
+      <div class="form-group">
+        <label>Id</label>
+        <div class="input-group">
+          <input formControlName="id" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="img">Imagen</label>
+        <div class="input-group">
+          <input formControlName="img" alife-file-to-base64 (onFileChanged)="obtener($event)" type="file"
+            accept=".png,.jpg,.gif" class="form-control">
+        </div>
+      </div>
+      <div class="form-group"></div>
+      <label for="tecnologia">tecnologia</label>
+      <div class="input-group">
+        <input formControlName="tecnologia" class="form-control">
+      </div>
+  <div class="form-group">
+     <label for="porcentaje">porcentaje</label>
+  <div class="input-group">
+    <input formControlName="porcentaje" class="form-control">
+  </div>
+  </div>
+  </form>
+
+
+  <div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-primary" (click)="editarSkill()">Actualizar</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
+  </div>
+  </div>
+</ng-template>
+
+
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar Habilidad</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h3>Esta seguro de eliminar este registro?</h3>
+  </div>
+  <div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Eliminar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+  </div>
+</ng-template>
