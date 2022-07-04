@@ -14,7 +14,7 @@ import { HabilidadService } from 'src/app/Services/habilidad.service';
 export class HabilidadComponent implements OnInit {
 
   habilidades: Habilidad[];
-  habilidad?:Habilidad= new Habilidad(0,"","","");
+  habilidad:Habilidad= new Habilidad();
   closeResult: string;
   editForm: FormGroup;
   private deleteId: number;
@@ -48,7 +48,7 @@ export class HabilidadComponent implements OnInit {
   this.base64 = e[0].base64;   
 }
 
-openSkill(targetModal: any) {
+openModal(targetModal: any) {
   this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
@@ -90,7 +90,7 @@ openSkill(targetModal: any) {
   }
 
 
-  guardarSkill(){
+  guardar(){
     const url = 'http://localhost:8080/habilidades/crear';
     this.editForm.value.img=this.base64;
     console.log(this.editForm.value);
@@ -131,7 +131,7 @@ openSkill(targetModal: any) {
   //     this.modalService.dismissAll();
 
   // }
-  editarSkill(){
+  editar(){
     this.editForm.value.img=this.base64;
     console.log (this.editForm.value);
     const editURL = 'http://localhost:8080/habilidades/' + 'editar/'  + this.editForm.value.id ;
@@ -185,8 +185,3 @@ openSkill(targetModal: any) {
 
 }
 
-
-
-function next(next: any, arg1: (response: any) => void) {
-  throw new Error('Function not implemented.');
-}

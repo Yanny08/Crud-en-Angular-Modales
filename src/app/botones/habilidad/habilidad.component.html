@@ -1,5 +1,5 @@
 <h2>HABILIDADES</h2>
-<button class="btn btn-lg btn-outline-primary" (click)="openSkill(content)">Agregar</button>
+<button class="btn btn-lg btn-outline-primary" (click)="openModal(content)">Agregar</button>
 
 <table class="table">
 
@@ -59,7 +59,7 @@
 
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-outline-dark" (click)="guardarSkill()">Agregar</button>
+        <button type="submit" class="btn btn-outline-dark" (click)="guardar()">Agregar</button>
       </div>
     </form>
   </div>
@@ -93,7 +93,7 @@
 
 
     <div class="modal-footer">
-      <button data-dismiss="modal" class="btn btn-primary" (click)="editarSkill()">Actualizar</button>
+      <button data-dismiss="modal" class="btn btn-primary" (click)="editar()">Actualizar</button>
       <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
     </div>
   </div>

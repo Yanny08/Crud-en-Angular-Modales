@@ -1,40 +1,20 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-sobre-mi',
-//   templateUrl: './sobre-mi.component.html',
-//   styleUrls: ['./sobre-mi.component.css']
-// })
-// export class SobreMiComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgbModalConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Habilidad } from 'src/app/Models/habilidad.model';
-import { HabilidadService } from 'src/app/Services/habilidad.service';
+import { SobreMi } from 'src/app/Models/sobreMi.model';
+import { SobreMiService } from 'src/app/Services/sobre-mi.service';
 
-
-// @Component({
-//   selector: 'app-habilidad',
-//   templateUrl: './habilidad.component.html',
-//   styleUrls: ['./habilidad.component.css']
-// })
 @Component({
   selector: 'app-sobre-mi',
   templateUrl: './sobre-mi.component.html',
   styleUrls: ['./sobre-mi.component.css']
 })
+
 export class SobreMiComponent implements OnInit {
 
-  habilidades: Habilidad[];
-  habilidad?:Habilidad= new Habilidad(0,"","","");
+  sobreMi: SobreMi[];
+  SobreMi:SobreMi= new SobreMi();
   closeResult: string;
   editForm: FormGroup;
   private deleteId: number;
@@ -45,7 +25,7 @@ export class SobreMiComponent implements OnInit {
   constructor(config: NgbModalConfig, 
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private  HabilidadService: HabilidadService,
+    private SobreMiService: SobreMiService,
     public httpClient:HttpClient) {
    
     config.backdrop = 'static';
@@ -55,12 +35,14 @@ export class SobreMiComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.HabilidadService.getHabilidad().subscribe(data => {this.habilidades = data})
+    this.SobreMiService.getSobreMi().subscribe(data => {this.sobreMi = data})
     this.editForm = this.fb.group({
       id: [''],
+      linkGit: [''],
+      linkDisc: [''],
+      linkLinke: [''],
+      descripcion: [''],
       img: [''],
-      tecnologia: [''],
-      porcentaje: [''],
       
     });
   }
@@ -68,7 +50,7 @@ export class SobreMiComponent implements OnInit {
   this.base64 = e[0].base64;   
 }
 
-openSkill(targetModal: any) {
+openModal(targetModal: any) {
   this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
@@ -96,60 +78,46 @@ openSkill(targetModal: any) {
 
   // onSubmit(f: NgForm) {
   //   console.log(f.form.value);
-    // const url = 'http://localhost:8080/habilidades/crear';
-    // this.httpClient.post(url, f.value)
-    //   .subscribe((result) => {
-    //     this.habilidad!=result
-    //     this.ngOnInit(); // reload the table
-    //   });
-    // this.modalService.dismissAll(); // dismiss the modal
+  //   const url = 'http://localhost:8080/habilidades/crear';
+  //   this.httpClient.post(url, f.value)
+  //     .subscribe((result) => {
+  //       this.habilidad!=result
+  //       this.ngOnInit(); // reload the table
+  //     });
+  //   this.modalService.dismissAll(); // dismiss the modal
   // }
 
-  // Submit(){
-  //   console.log(this.editForm.value);
-  // }
+  Submit(){
+    console.log(this.editForm.value);
+  }
 
 
-  guardarSkill(){
-    const url = 'http://localhost:8080/habilidades/crear';
+  guardar(){
+    const url = 'http://localhost:8080/sobreMi/crear';
     this.editForm.value.img=this.base64;
     console.log(this.editForm.value);
-     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.habilidad!=res,
+     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.SobreMi!=res,
     this.ngOnInit();
   })
     this.modalService.dismissAll();
   }
-
-
-  openEdit(targetModal, habilidad: Habilidad) {
+  
+  openEdit(targetModal, sobreMi: SobreMi) {
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static',
       size: 'lg'
     });
     this.editForm.patchValue( {
-      id: habilidad.id,
-      img: habilidad.img,
-      tecnologia: habilidad.tecnologia,
-      porcentaje: habilidad.porcentaje,
-      
+      id: sobreMi.id,
+      linkGit: sobreMi.linkGit,
+      linkDisc: sobreMi.linkDisc,
+      linkLinke: sobreMi.linkLinke,
+      img: sobreMi.img,
     
     });
    }
-editarSkill(){
-  this.editForm.value.img=this.base64;
-  console.log (this.editForm.value);
-  const editURL = 'http://localhost:8080/habilidades/' + 'editar/'  + this.editForm.value.id ;
-  this.httpClient.put(editURL, this.editForm.value)
-    .subscribe((results) => {
-      this.habilidades!=results,
-      this.ngOnInit();
-      
-    });
-  
-    this.modalService.dismissAll();
 
-}
 
 
   // onSave() {
@@ -165,9 +133,23 @@ editarSkill(){
   //     this.modalService.dismissAll();
 
   // }
+  editar(){
+    this.editForm.value.img=this.base64;
+    console.log (this.editForm.value);
+    const editURL = 'http://localhost:8080/sobreMi/' + 'editar/'  + this.editForm.value.id ;
+    this.httpClient.put(editURL, this.editForm.value)
+      .subscribe((results) => {
+        this.SobreMi!=results,
+        this.ngOnInit();
+        
+      });
+    
+      this.modalService.dismissAll();
+  
+  }
 
-  openDelete(targetModal, habilidad:Habilidad) {
-    this.deleteId= habilidad.id;
+  openDelete(targetModal, sobreMi:SobreMi) {
+    this.deleteId= sobreMi.id;
     this.modalService.open(targetModal, {
       backdrop: 'static',
       size: 'lg'
@@ -175,7 +157,7 @@ editarSkill(){
   }
 
   onDelete() {
-    const deleteURL = 'http://localhost:8080/habilidades/' +  'borrar/'+ this.deleteId ;
+    const deleteURL = 'http://localhost:8080/sobreMi/' +  'borrar/'+ this.deleteId ;
     this.httpClient.delete(deleteURL)
       .subscribe((results) => {
         this.ngOnInit();
@@ -206,7 +188,3 @@ editarSkill(){
 }
 
 
-
-function next(next: any, arg1: (response: any) => void) {
-  throw new Error('Function not implemented.');
-}

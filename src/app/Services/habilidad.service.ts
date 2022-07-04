@@ -18,10 +18,10 @@ export class HabilidadService {
   public getHabilidad()  {
     return this.http.get<Habilidad[]>(this.URL + 'traer');
   }
-  public getPersonaId(id: any): Observable<Habilidad> {
+  public getHabilidadId(id: any): Observable<Habilidad> {
     return this.http.get<Habilidad>(this.URL + 'traer/' + id);
   }
-  public addPersona(habilidad: Habilidad) {
+  public addHabilidad(habilidad: Habilidad) {
     return this.http.post<Habilidad>(this.URL + 'crear', habilidad);
   }
 
@@ -29,7 +29,7 @@ export class HabilidadService {
     return this.http.delete<Habilidad>(this.URL + 'borrar/' + id);
   }
 
-  public updatePersona(habilidad: Habilidad) {
+  public updateHabilidad(habilidad: Habilidad) {
     return this.http.put<Habilidad>(this.URL + 'editar/'+ habilidad.id,habilidad)
   }
  

@@ -1,32 +1,34 @@
-
-<h2>HABILIDADES2</h2>
-<button class="btn btn-lg btn-outline-primary" (click)="openSkill(content)">Agregar</button>
+<h2>Sobre Mí</h2>
+<button class="btn btn-lg btn-outline-primary" (click)="openModal(content)">Agregar</button>
 
 <table class="table">
 
   <thead class="thead-light">
     <tr>
 
+      <th scope="col">linkGit</th>
+      <th scope="col">linkDisc</th>
+      <th scope="col">linkLinke</th>
+      <th scope="col">Descripción</th>
       <th scope="col">Img</th>
-      <th scope="col">Tecnologia</th>
-      <th scope="col">Porcentaje</th>
 
     </tr>
   </thead>
+
   <tbody>
 
-    <tr *ngFor="let habilidad of habilidades">
+    <tr *ngFor="let sobreMi of sobreMi">
 
-      <img src="{{habilidad.img}}" accept="image/*">
-      <td>{{habilidad.tecnologia}}</td>
-      <!-- <td>{{habilidad.porcentaje}}</td> -->
-      <div class="progress-bar bg-success   progress-bar-striped" role="progressbar"
-        attr.style="width:{{habilidad.porcentaje}}%" aria-valuenow="25" aria-valuemin="" aria-valuemax="100">
-      </div>
+      <td>{{sobreMi.linkGit}}</td>
+      <td>{{sobreMi.linkDisc}}</td>
+      <td>{{sobreMi.linkLinke}}</td>
+      <td>{{sobreMi.descripcion}}</td>
+      <img src="{{sobreMi.img}}" accept="image/*">
 
       <td>
-        <button class="btn btn-primary" (click)="openEdit(contentEdit,habilidad)"> Edit </button>
-        <button class="btn btn-danger" (click)="openDelete(contentDelete,habilidad)"> Delete</button>
+        <button class="btn btn-primary" (click)="openEdit(contentEdit,sobreMi)"> Edit </button>
+        <button class="btn btn-danger" (click)="openDelete(contentDelete, sobreMi)">
+          Delete</button>
       </td>
     </tr>
   </tbody>
@@ -42,21 +44,34 @@
 
     <form [formGroup]="editForm">
 
-      <label>tecnologia </label>
-      <input type="text" name="tecnologia" id="" class="form-control" formControlName="tecnologia" value="">
+      
+      <div class="form-group">
+        <label>linkGit</label>
+        <input type="text" name="linkGit" id="" class="form-control" formControlName="linkGit" value="">
+      </div>
+      <div class="form-group">
+        <label>linkDisc</label>
+        <input type="text" name="linkDisc" id="" class="form-control" formControlName="linkDisc" value="">
+      </div>
+      <div class="form-group">
+        <label>linkLinke</label>
+        <input type="text" name="linkDisc" id="" class="form-control" formControlName="linkDisc" value="">
+      </div>
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" class="form-control" rows="5" cols="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>img</label>
+        <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file"
+          (onFileChanged)="obtener($event)" class="form-control" placeholder="" formControlName="img">
+      </div>
 
-      <label>porcentaje</label>
-      <input type="range" class="form-range" formControlName="porcentaje" id="customRange1">
 
-      <label>img</label>
-      <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file" (onFileChanged)="obtener($event)"
-        class="form-control" placeholder="" formControlName="img">
-
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark" (click)="guardar()">Agregar</button>
+      </div>
     </form>
-    <!-- <button type="button" class="btn btn-danger" (click)=guardarSkill()>Cerrar</button> -->
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark" (click)="guardarSkill()">Agregar</button>
-    </div>
   </div>
 </ng-template>
 
@@ -68,39 +83,37 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="editForm" novalidate>
-      
+    <form [formGroup]="editForm">
+
       <div class="form-group">
-        <label>Id</label>
-        <div class="input-group">
-          <input formControlName="id" class="form-control">
-        </div>
+        <label>linkGit </label>
+        <input type="text" name="linkGit" id="" class="form-control" formControlName="linkGit" value="">
       </div>
       <div class="form-group">
-        <label for="img">Imagen</label>
-        <div class="input-group">
-          <input formControlName="img" alife-file-to-base64 (onFileChanged)="obtener($event)" type="file"
-            accept=".png,.jpg,.gif" class="form-control">
-        </div>
+        <label>linkDisc</label>
+        <input type="text" name="linkDisc" id="" class="form-control" formControlName="linkDisc" value="">
       </div>
-      <div class="form-group"></div>
-      <label for="tecnologia">tecnologia</label>
-      <div class="input-group">
-        <input formControlName="tecnologia" class="form-control">
+      <div class="form-group">
+        <label>linkLinke</label>
+        <input type="text" name="linkLinke" id="" class="form-control" formControlName="linkLinke" value="">
       </div>
-  <div class="form-group">
-     <label for="porcentaje">porcentaje</label>
-  <div class="input-group">
-    <input formControlName="porcentaje" class="form-control">
-  </div>
-  </div>
-  </form>
+      <div class="form-group">
+        <label for="descripcion">descripcion</label>
+          <textarea formControlName="descripcion" class="form-control" rows="5" cols="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>img</label>
+        <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file"
+          (onFileChanged)="obtener($event)" class="form-control" placeholder=""  >
+      </div>
+
+    </form>
 
 
-  <div class="modal-footer">
-    <button data-dismiss="modal" class="btn btn-primary" (click)="editarSkill()">Actualizar</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
-  </div>
+    <div class="modal-footer">
+      <button data-dismiss="modal" class="btn btn-primary" (click)="editar()">Actualizar</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
+    </div>
   </div>
 </ng-template>
 

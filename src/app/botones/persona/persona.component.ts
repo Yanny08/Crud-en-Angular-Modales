@@ -46,7 +46,10 @@ export class PersonaComponent implements OnInit {
     obtener(e: any) {     
     this.base64 = e[0].base64;   
   }
-  
+  // obtener(e: any) {     
+  //   this.a=e[0].base64; 
+  //   this.habilidad.value.img=this.a;  
+  // }
     //   public getPersona(){
     //   this.PersonaService.getPersona().subscribe(data => (this.personas = data))
     // }

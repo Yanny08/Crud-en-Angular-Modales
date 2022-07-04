@@ -26,7 +26,7 @@ export class ResumenComponent implements OnInit {
       private fb: FormBuilder,
       private ResumenService:ResumenService,
       public httpClient:HttpClient) {
-      // customize default values of modals used by this component tree
+     
       config.backdrop = 'static';
       config.keyboard = false;
     }
@@ -45,31 +45,20 @@ export class ResumenComponent implements OnInit {
         
       });
     }
-   
-    //   public getPersona(){
-    //   this.PersonaService.getPersona().subscribe(data => (this.personas = data))
-    // }
-
- 
   
-    //  getPersona(){
-    //   this.httpClient.get<any>('http://localhost:8080/personas/traer').subscribe(
-    //      response =>{
-    //       console.log(response);
-    //       this.personas =response;
-    //     }
-    //   )
+  
+    // onSubmit(f: NgForm) {
+    //   console.log(f.form.value);
+    //   const url = 'http://localhost:8080/resumen/crear';
+    //   this.httpClient.post(url, f.value)
+    //     .subscribe((result) => {
+    //       this.ngOnInit(); // reload the table
+    //     });
+    //   this.modalService.dismissAll(); // dismiss the modal
     // }
   
-  
-    onSubmit(f: NgForm) {
-      console.log(f.form.value);
-      const url = 'http://localhost:8080/resumen/crear';
-      this.httpClient.post(url, f.value)
-        .subscribe((result) => {
-          this.ngOnInit(); // reload the table
-        });
-      this.modalService.dismissAll(); // dismiss the modal
+    Submit(){
+      console.log(this.editForm.value);
     }
   
     openEdit(targetModal, resumen:Resumen) {
@@ -87,10 +76,20 @@ export class ResumenComponent implements OnInit {
         descripcion: resumen.descripcion,
       });
      }
+
+     guardar(){
+      const url = 'http://localhost:8080/habilidades/crear';
+      // this.editForm.value.img=this.base64;
+      console.log(this.editForm.value);
+       this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.resumen!=res,
+      this.ngOnInit();
+    })
+      this.modalService.dismissAll();
+    }
+    
   
   
-  
-    onSave() {
+    editar() {
       const editURL = 'http://localhost:8080/resumen/' + 'editar/'  + this.editForm.value.id ;
       this.httpClient.put(editURL, this.editForm.value)
         .subscribe((results) => {
@@ -117,7 +116,7 @@ export class ResumenComponent implements OnInit {
     }
   
   
-    open(content) {
+    openModal(content) {
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
