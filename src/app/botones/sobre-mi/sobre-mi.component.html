@@ -27,7 +27,7 @@
 
       <td>
         <button class="btn btn-primary" (click)="openEdit(contentEdit,sobreMi)"> Edit </button>
-        <button class="btn btn-danger" (click)="openDelete(contentDelete, sobreMi)">
+        <button class="btn btn-danger" (click)="openDelete(contentDelete,sobreMi)">
           Delete</button>
       </td>
     </tr>
@@ -59,12 +59,12 @@
       </div>
       <div class="form-group">
         <label for="descripcion">Descripción</label>
-          <textarea id="descripcion" name="descripcion" class="form-control" rows="5" cols="10"></textarea>
+          <textarea id="descripcion" name="descripcion" class="form-control" ngModel rows="5" cols="10"></textarea>
       </div>
       <div class="form-group">
         <label>img</label>
-        <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file"
-          (onFileChanged)="obtener($event)" class="form-control" placeholder="" formControlName="img">
+        <input type="file" alife-file-to-base64 accept="image/*" name="img"
+          (onFileChanged)="obtener($event)" class="form-control" formControlName="img">
       </div>
 
 
@@ -75,9 +75,10 @@
   </div>
 </ng-template>
 
+<!-- EDITAR MODAL -->
 <ng-template #contentEdit let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title2">Editar Habilidad</h4>
+    <h4 class="modal-title" id="modal-basic-title2">Editar SobreMi</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -103,21 +104,21 @@
       </div>
       <div class="form-group">
         <label>img</label>
-        <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file"
-          (onFileChanged)="obtener($event)" class="form-control" placeholder=""  >
+        <input type="file" alife-file-to-base64 accept="image/*" name="img"
+          (onFileChanged)="obtener($event)" class="form-control" formControlName="img">
       </div>
 
     </form>
 
 
     <div class="modal-footer">
-      <button data-dismiss="modal" class="btn btn-primary" (click)="editar()">Actualizar</button>
+      <button data-dismiss="modal" class="btn btn-primary" (click)="guardar()">Actualizar</button>
       <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
     </div>
   </div>
 </ng-template>
 
-
+<!-- EDITAR MODAL ELIMINAR-->
 <ng-template #contentDelete let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Eliminar Habilidad</h4>

@@ -1,5 +1,5 @@
 <h2>Persona:</h2>
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Agregar</button>
+<button class="btn btn-lg btn-outline-primary" (click)="openModal(content)">Agregar</button>
 
 <table class="table">
 
@@ -9,7 +9,6 @@
       <th scope="col">Nombre</th>
       <th scope="col">Apellido</th>
       <th scope="col">Imagen</th>
-
 
     </tr>
   </thead>
@@ -22,9 +21,9 @@
       <img src="{{persona.img}}" accept="image/*">
 
       <td>
-        <button class="btn btn-primary" (click)="openEdit(contentEdit,persona)"> Edit </button>
-        <button class="btn btn-danger" (click)="openDelete(contentDelete, persona)">
-          Delete</button>
+        <button class="btn btn-primary" (click)="openEdit(contentEdit,persona)"> Editar </button>
+        <button class="btn btn-danger" (click)="openDelete(contentDelete,persona)">
+          Borrar</button>
       </td>
     </tr>
   </tbody>
@@ -38,34 +37,30 @@
   </div>
   <div class="modal-body">
 
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <form [formGroup]="editForm">
+      
       <div class="form-group">
-        <label>Nombre</label>
-        <div class="input-group">
+        <label for="nombre">Nombre</label>
           <input class="form-control" name="nombre" #nombre="ngModel" ngModel required>
         </div>
-      </div>
       <div class="form-group">
         <label for="apellido">Apellido</label>
-        <div class="input-group">
           <input id="apellido" name="apellido" class="form-control" ngModel>
-        </div>
       </div>
       <div class="form-group">
-        <label for="img">Imagen</label>
-        <div class="input-group">
-          <input id="img" name="img" class="form-control" ngModel>
-        </div>
+        <label for="img">img</label>
+        <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)">
+        <img src="{{base64}}">
       </div>
-      <br>
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-outline-dark" (click)="c('Save click')">Agregar</button>
+        <button type="submit" class="btn btn-outline-dark" (click)="guardar()">Agregar</button>
       </div>
     </form>
   </div>
 </ng-template>
 
+<!-- EDITAR MODAL -->
 <ng-template #contentEdit let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title2">Editar Perfil</h4>
@@ -74,13 +69,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="editForm" novalidate>
-      <div class="form-group">
-        <label>Id</label>
-        <div class="input-group">
-          <input formControlName="id" class="form-control">
-        </div>
-      </div>
+    <form [formGroup]="editForm">
+
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <div class="input-group">
@@ -94,23 +84,26 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="img">Imagen</label>
+        <label for="img">img</label>
         <div class="input-group">
-          <input alife-file-to-base64 (onFileChanged)="obtener($event)" type="file" accept=".png,.jpg,.gif"
-            class="form-control">
+          <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)" class="form-control" formControlName="img">
+
+          <img src="{{base64}}" height="100px">
         </div>
       </div>
     </form>
 
 
     <div class="modal-footer">
-      <button data-dismiss="modal" class="btn btn-primary" (click)="onSave()">Actualizar</button>
+      <button data-dismiss="modal" class="btn btn-primary" (click)="guardar()">Actualizar</button>
       <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
+      <!-- <button class="btn btn-danger" (click)="guardar()"> actualizar </button>
+      <button type="button" class="btn btn-danger">Cerrar</button> -->
     </div>
   </div>
 </ng-template>
 
-
+<!-- EDITAR MODAL ELIMINAR-->
 <ng-template #contentDelete let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Eliminar Perfil</h4>

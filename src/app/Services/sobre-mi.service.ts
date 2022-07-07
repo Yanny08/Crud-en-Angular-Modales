@@ -11,7 +11,6 @@ export class SobreMiService {
   URL = 'http://localhost:8080/sobreMi/';
 
   
-  
   constructor(private http: HttpClient) { }
 
 

@@ -10,13 +10,9 @@ export class PersonaService {
 
   URL = 'http://localhost:8080/personas/';
 
-  // private _refresh$= new Subject<void>();
   
   constructor(private http: HttpClient) { }
 
-  // get refresh$(){
-  //   return this._refresh$;
-  // }
 
   public getPersona()  {
     return this.http.get<Persona[]>(this.URL + 'traer');
@@ -26,11 +22,7 @@ export class PersonaService {
   }
   public addPersona(persona: Persona) {
     return this.http.post<Persona>(this.URL + 'crear', persona);
-    // .pipe(
-    //   tap(()=>{
-    //     this._refresh$.next();
-    //   })
-    // )
+    
   }
 
   public deletePersona(id: any) {
@@ -39,11 +31,6 @@ export class PersonaService {
 
   public updatePersona(persona: Persona) {
     return this.http.put<Persona>(this.URL + 'editar/'+ persona.id,persona)
-    // .pipe(
-    //   tap(()=>{
-    //     this._refresh$.next();
-    //   })
-    // )
   }
  
 }
