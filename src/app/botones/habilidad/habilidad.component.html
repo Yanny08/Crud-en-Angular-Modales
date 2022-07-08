@@ -19,7 +19,6 @@
 
       <img src="{{habilidad.img}}" accept="image/*">
       <td>{{habilidad.tecnologia}}</td>
-      <!-- <td>{{habilidad.porcentaje}}</td> -->
       <div class="progress-bar bg-success   progress-bar-striped" role="progressbar"
         attr.style="width:{{habilidad.porcentaje}}%" aria-valuenow="25" aria-valuemin="" aria-valuemax="100">
       </div>
@@ -43,9 +42,11 @@
     <form [formGroup]="editForm">
 
       <div class="form-group">
-        <label>img</label>
-        <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file"
-          (onFileChanged)="obtener($event)" class="form-control" placeholder="" formControlName="img">
+        <label for="img">img</label>
+        <div class="input-group">
+          <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)" class="form-control">
+          <img src="{{base64}}" height="100px">
+        </div>
       </div>
       <div class="form-group">
         <label>tecnologia </label>
@@ -56,8 +57,6 @@
         <input type="range" class="form-range" formControlName="porcentaje" id="customRange1">
       </div>
      
-
-
       <div class="modal-footer">
         <button type="submit" class="btn btn-outline-dark" (click)="guardar()">Agregar</button>
       </div>
@@ -65,6 +64,7 @@
   </div>
 </ng-template>
 
+<!-- EDITAR MODAL -->
 <ng-template #contentEdit let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title2">Editar Habilidad</h4>
@@ -76,13 +76,15 @@
     <form [formGroup]="editForm">
 
       <div class="form-group">
-        <label>img</label>
-        <input type="file" alife-file-to-base64 accept="image/png,image/jpg" name="file"
-          (onFileChanged)="obtener($event)" class="form-control" placeholder=""  >
+        <label for="img">img</label>
+        <div class="input-group">
+          <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)" class="form-control">
+          <img src="{{base64}}" height="100px">
+        </div>
       </div>
       <div class="form-group">
         <label>tecnologia </label>
-        <input type="text" name="tecnologia" id="" class="form-control" formControlName="tecnologia" value="">
+        <input type="text" name="tecnologia" id="" class="form-control" formControlName="tecnologia" >
       </div>
       <div class="form-group">
         <label>porcentaje</label>
@@ -93,7 +95,7 @@
 
 
     <div class="modal-footer">
-      <button data-dismiss="modal" class="btn btn-primary" (click)="editar()">Actualizar</button>
+      <button data-dismiss="modal" class="btn btn-primary" (click)="guardar()">Actualizar</button>
       <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
     </div>
   </div>

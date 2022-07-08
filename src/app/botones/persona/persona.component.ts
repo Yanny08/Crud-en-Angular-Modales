@@ -14,7 +14,7 @@ import { PersonaService } from 'src/app/Services/persona.service';
 export class PersonaComponent implements OnInit {
 
   personas: Persona[];
-  persona: Persona = new Persona();
+  Persona = new Persona();
   closeResult: string;
   editForm!: FormGroup;
   private deleteId: number;
@@ -56,6 +56,11 @@ openModal(targetModal: any) {
   });
 }
 
+obtener($event:any){
+  this.base64=$event[0].base64;
+  this.editForm.value.img=this.base64;
+ }
+
 
   openEdit(targetModal: any, persona:Persona) {
     this.modalService.open(targetModal, {
@@ -74,33 +79,18 @@ openModal(targetModal: any) {
    }
 
   
-  obtener($event:any){
-  this.base64=$event[0].base64;
-  this.editForm.value.img=this.base64;
- }
+
 
   guardar(){
     const url = 'http://localhost:8080/personas/crear';
     // this.editForm.value.img=this.base64;
     console.log(this.editForm.value);
-     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.persona!=res,
-    this.ngOnInit()});
+     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.Persona!=res,
+    this.ngOnInit();
+  })
     this.modalService.dismissAll();
   }
   
-  // editar(){
-  //   console.log (this.editForm.value);
-  //   const editURL = 'http://localhost:8080/personas/' + 'editar/'  + this.editForm.value.id ;
-  //   this.httpClient.put(editURL, this.editForm.value)
-  //     .subscribe((results) => {
-  //       this.persona!=results,
-  //       this.ngOnInit();
-        
-  //     });
-    
-  //     this.modalService.dismissAll();
-  
-  // }
 
   openDelete(targetModal, persona:Persona) {
     this.deleteId= persona.id;

@@ -17,17 +17,17 @@
 
   <tbody>
 
-    <tr *ngFor="let sobreMi of sobreMi">
+    <tr *ngFor="let sobre_Mi of sobreMi">
 
-      <td>{{sobreMi.linkGit}}</td>
-      <td>{{sobreMi.linkDisc}}</td>
-      <td>{{sobreMi.linkLinke}}</td>
-      <td>{{sobreMi.descripcion}}</td>
-      <img src="{{sobreMi.img}}" accept="image/*">
+      <td>{{sobre_Mi.linkGit}}</td>
+      <td>{{sobre_Mi.linkDisc}}</td>
+      <td>{{sobre_Mi.linkLinke}}</td>
+      <td>{{sobre_Mi.descripcion}}</td>
+      <img src="{{sobre_Mi.img}}" accept="image/*">
 
       <td>
-        <button class="btn btn-primary" (click)="openEdit(contentEdit,sobreMi)"> Edit </button>
-        <button class="btn btn-danger" (click)="openDelete(contentDelete,sobreMi)">
+        <button class="btn btn-primary" (click)="openEdit(contentEdit,sobre_Mi)"> Edit </button>
+        <button class="btn btn-danger" (click)="openDelete(contentDelete,sobre_Mi)">
           Delete</button>
       </td>
     </tr>
@@ -62,9 +62,9 @@
           <textarea id="descripcion" name="descripcion" class="form-control" ngModel rows="5" cols="10"></textarea>
       </div>
       <div class="form-group">
-        <label>img</label>
-        <input type="file" alife-file-to-base64 accept="image/*" name="img"
-          (onFileChanged)="obtener($event)" class="form-control" formControlName="img">
+        <label for="img">img</label>
+        <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)">
+        <img src="{{base64}}">
       </div>
 
 
@@ -103,11 +103,12 @@
           <textarea formControlName="descripcion" class="form-control" rows="5" cols="10"></textarea>
       </div>
       <div class="form-group">
-        <label>img</label>
-        <input type="file" alife-file-to-base64 accept="image/*" name="img"
-          (onFileChanged)="obtener($event)" class="form-control" formControlName="img">
+        <label for="img">img</label>
+        <div class="input-group">
+          <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)" class="form-control">
+          <img src="{{base64}}" height="100px">
+        </div>
       </div>
-
     </form>
 
 

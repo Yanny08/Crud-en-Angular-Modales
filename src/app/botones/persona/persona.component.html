@@ -49,8 +49,10 @@
       </div>
       <div class="form-group">
         <label for="img">img</label>
-        <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)">
-        <img src="{{base64}}">
+        <div class="input-group">
+          <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)" class="form-control">
+          <img src="{{base64}}" height="100px">
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -87,7 +89,6 @@
         <label for="img">img</label>
         <div class="input-group">
           <input  type="file" alife-file-to-base64 (onFileChanged)="obtener($event)" class="form-control">
-
           <img src="{{base64}}" height="100px">
         </div>
       </div>
@@ -97,8 +98,6 @@
     <div class="modal-footer">
       <button data-dismiss="modal" class="btn btn-primary" (click)="guardar()">Actualizar</button>
       <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cerrar</button>
-      <!-- <button class="btn btn-danger" (click)="guardar()"> actualizar </button>
-      <button type="button" class="btn btn-danger">Cerrar</button> -->
     </div>
   </div>
 </ng-template>

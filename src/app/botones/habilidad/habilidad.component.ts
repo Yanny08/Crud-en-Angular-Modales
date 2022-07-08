@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder,} from '@angular/forms';
 import { NgbModalConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Habilidad } from 'src/app/Models/habilidad.model';
 import { HabilidadService } from 'src/app/Services/habilidad.service';
@@ -14,7 +14,7 @@ import { HabilidadService } from 'src/app/Services/habilidad.service';
 export class HabilidadComponent implements OnInit {
 
   habilidades: Habilidad[];
-  habilidad:Habilidad= new Habilidad();
+  Habilidad= new Habilidad();
   closeResult: string;
   editForm: FormGroup;
   private deleteId: number;
@@ -24,7 +24,7 @@ export class HabilidadComponent implements OnInit {
 
   constructor(config: NgbModalConfig, 
     private modalService: NgbModal,
-    private fb: FormBuilder,
+    private form: FormBuilder,
     private  HabilidadService: HabilidadService,
     public httpClient:HttpClient) {
    
@@ -36,7 +36,7 @@ export class HabilidadComponent implements OnInit {
 
   ngOnInit(): void {
     this.HabilidadService.getHabilidad().subscribe(data => {this.habilidades = data})
-    this.editForm = this.fb.group({
+    this.editForm = this.form.group({
       id: [''],
       img: [''],
       tecnologia: [''],
@@ -44,9 +44,6 @@ export class HabilidadComponent implements OnInit {
       
     });
   }
-  obtener(e: any) {     
-  this.base64 = e[0].base64;   
-}
 
 openModal(targetModal: any) {
   this.modalService.open(targetModal, {
@@ -57,94 +54,39 @@ openModal(targetModal: any) {
   });
 }
 
+obtener(e: any) {     
+  this.base64 = e[0].base64; 
+  this.editForm.value.img=this.base64;  
+}
 
-  //   public getPersona(){
-  //   this.PersonaService.getPersona().subscribe(data => (this.personas = data))
-  // }
-
-
-
-  //  getPersona(){
-  //   this.httpClient.get<any>('http://localhost:8080/personas/traer').subscribe(
-  //      response =>{
-  //       console.log(response);
-  //       this.personas =response;
-  //     }
-  //   )
-  // }
- 
-
-  // onSubmit(f: NgForm) {
-  //   console.log(f.form.value);
-  //   const url = 'http://localhost:8080/habilidades/crear';
-  //   this.httpClient.post(url, f.value)
-  //     .subscribe((result) => {
-  //       this.habilidad!=result
-  //       this.ngOnInit(); // reload the table
-  //     });
-  //   this.modalService.dismissAll(); // dismiss the modal
-  // }
-
-  Submit(){
-    console.log(this.editForm.value);
-  }
-
+openEdit(targetModal, habilidad: Habilidad) {
+  this.modalService.open(targetModal, {
+    centered: true,
+    backdrop: 'static',
+    size: 'lg'
+  });
+  this.editForm.patchValue( {
+    id: habilidad.id,
+    img: habilidad.img,
+    tecnologia: habilidad.tecnologia,
+    porcentaje: habilidad.porcentaje,
+    
+  
+  });
+ }
 
   guardar(){
     const url = 'http://localhost:8080/habilidades/crear';
-    this.editForm.value.img=this.base64;
     console.log(this.editForm.value);
-     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.habilidad!=res,
+     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.Habilidad!=res,
     this.ngOnInit();
   })
     this.modalService.dismissAll();
   }
   
-  openEdit(targetModal, habilidad: Habilidad) {
-    this.modalService.open(targetModal, {
-      centered: true,
-      backdrop: 'static',
-      size: 'lg'
-    });
-    this.editForm.patchValue( {
-      id: habilidad.id,
-      img: habilidad.img,
-      tecnologia: habilidad.tecnologia,
-      porcentaje: habilidad.porcentaje,
-      
-    
-    });
-   }
-
-
-
-  // onSave() {
-  //   this.editForm.value.img=this.base64;
-  //   console.log (this.editForm.value);
-  //   const editURL = 'http://localhost:8080/habilidades/' + 'editar/'  + this.editForm.value.id ;
-  //   this.httpClient.put(editURL, this.editForm.value)
-  //     .subscribe((results) => {
-  //       this.ngOnInit();
-        
-  //     });
-    
-  //     this.modalService.dismissAll();
-
-  // }
-  editar(){
-    this.editForm.value.img=this.base64;
-    console.log (this.editForm.value);
-    const editURL = 'http://localhost:8080/habilidades/' + 'editar/'  + this.editForm.value.id ;
-    this.httpClient.put(editURL, this.editForm.value)
-      .subscribe((results) => {
-        this.habilidades!=results,
-        this.ngOnInit();
-        
-      });
-    
-      this.modalService.dismissAll();
   
-  }
+
+
 
   openDelete(targetModal, habilidad:Habilidad) {
     this.deleteId= habilidad.id;

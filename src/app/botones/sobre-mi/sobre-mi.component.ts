@@ -46,9 +46,6 @@ export class SobreMiComponent implements OnInit {
       
     });
   }
-  obtener(e: any) {     
-  this.base64 = e[0].base64;   
-}
 
 openModal(targetModal: any) {
   this.modalService.open(targetModal, {
@@ -59,9 +56,6 @@ openModal(targetModal: any) {
   });
 }
 
-  // Submit(){
-  //   console.log(this.editForm.value);
-  // }
 
   openEdit(targetModal, sobreMi: SobreMi) {
     this.modalService.open(targetModal, {
@@ -80,9 +74,14 @@ openModal(targetModal: any) {
     });
    }
 
+   obtener($event:any){
+    this.base64=$event[0].base64;
+    this.editForm.value.img=this.base64;
+   }
+  
+
   guardar(){
     const url = 'http://localhost:8080/sobreMi/crear';
-    this.editForm.value.img=this.base64;
     console.log(this.editForm.value);
      this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.SobreMi!=res,
     this.ngOnInit()});
