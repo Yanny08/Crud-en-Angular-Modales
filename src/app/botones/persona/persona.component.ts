@@ -45,25 +45,6 @@ export class PersonaComponent implements OnInit {
     });
   }
   
-  // editar(personas:Persona){
-    
-  //   let id= localStorage.setItem("id",personas.id!.toString());
-  // }
-  
-  obtener(e) {     
-  this.base64 = e[0].base64; 
-}
-
-// obtener(e:any){
-//   this.base64=e[0].base64;
-//   this.editForm.value.img=this.base64;
-//  }
-
-// onFileChanged(files){
-//   console.log("file changed by method::",files);
-//   this.base64=files[0].base64
-// }
-
 
 
 openModal(targetModal: any) {
@@ -75,9 +56,6 @@ openModal(targetModal: any) {
   });
 }
 
-  // Submit(){
-  //   console.log(this.editForm.value);
-  // }
 
   openEdit(targetModal: any, persona:Persona) {
     this.modalService.open(targetModal, {
@@ -94,6 +72,12 @@ openModal(targetModal: any) {
     });
 
    }
+
+  
+  obtener($event:any){
+  this.base64=$event[0].base64;
+  this.editForm.value.img=this.base64;
+ }
 
   guardar(){
     const url = 'http://localhost:8080/personas/crear';
