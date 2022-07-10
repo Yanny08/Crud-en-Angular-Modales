@@ -45,12 +45,27 @@ export class ResumenComponent implements OnInit {
         
       });
     }
-  
-    Submit(){
+
+    modalAgregar(content) {
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+
+    guardar(){
+      const url = 'http://localhost:8080/resumen/crear';
       console.log(this.editForm.value);
+       this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.resumen!=res,
+      this.ngOnInit();
+      this.modalService.dismissAll();
+    })
     }
   
-    openEdit(targetModal, resumen:Resumen) {
+
+  
+    modalEdit(targetModal, resumen:Resumen) {
       this.modalService.open(targetModal, {
         centered: true,
         backdrop: 'static',
@@ -66,17 +81,7 @@ export class ResumenComponent implements OnInit {
       });
      }
 
-     guardar(){
-      const url = 'http://localhost:8080/habilidades/crear';
-      console.log(this.editForm.value);
-       this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.resumen!=res,
-      this.ngOnInit();
-    })
-      this.modalService.dismissAll();
-    }
-    
-  
-  
+   
     editar() {
       const editURL = 'http://localhost:8080/resumen/' + 'editar/'  + this.editForm.value.id ;
       this.httpClient.put(editURL, this.editForm.value)
@@ -86,7 +91,7 @@ export class ResumenComponent implements OnInit {
         });
     }
   
-    openDelete(targetModal, resumen:Resumen) {
+    borrar(targetModal, resumen:Resumen) {
       this.deleteId = resumen.id;
       this.modalService.open(targetModal, {
         backdrop: 'static',
@@ -94,7 +99,7 @@ export class ResumenComponent implements OnInit {
       });
     }
   
-    onDelete() {
+    modalBorrar() {
       const deleteURL = 'http://localhost:8080/resumen/' +  'borrar/'+ this.deleteId ;
       this.httpClient.delete(deleteURL)
         .subscribe((results) => {
@@ -104,14 +109,7 @@ export class ResumenComponent implements OnInit {
     }
   
   
-    openModal(content) {
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }
-  
+    
     private getDismissReason(reason: any): string {
       if (reason === ModalDismissReasons.ESC) {
         return 'by pressing ESC';

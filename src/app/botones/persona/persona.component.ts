@@ -38,61 +38,66 @@ export class PersonaComponent implements OnInit {
     this.PersonaService.getPersona().subscribe(data => {this.personas = data})
     this.editForm = this.form.group({
       id: [''],
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      img: ['', Validators.required],
+      nombre: [''],
+      apellido: [''],
+      img: [''],
       
     });
   }
   
-
-
-openModal(targetModal: any) {
-  this.modalService.open(targetModal, {
-    centered: true,
-    backdrop: 'static',
-    size: 'lg'
-
-  });
-}
 
 obtener($event:any){
   this.base64=$event[0].base64;
   this.editForm.value.img=this.base64;
  }
 
+ modalAgregar(content) {
+  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+}
 
-  openEdit(targetModal: any, persona:Persona) {
-    this.modalService.open(targetModal, {
-      centered: true,
-      backdrop: 'static',
-      size: 'lg'
-    });
-    this.editForm.patchValue( {
-      id: persona.id,
-      nombre: persona.nombre,
-      apellido: persona.apellido,
-      img: persona.img,
-    
-    });
+ guardar(){
+   const url = 'http://localhost:8080/personas/crear';
+   console.log(this.editForm.value);
+    this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.personas!=res,
+   this.ngOnInit();
+   this.modalService.dismissAll();
+ })
+ }
+ 
+ 
 
-   }
-
+ modalEdit(targetModal, persona:Persona) {
+  this.modalService.open(targetModal, {
+    centered: true,
+    backdrop: 'static',
+    size: 'lg'
+  });
+  this.editForm.patchValue( {
+    id: persona.id,
+    nombre: persona.nombre,
+    apellido: persona.apellido,
+    img: persona.img,
   
+  });
 
+ }
 
-  guardar(){
-    const url = 'http://localhost:8080/personas/crear';
-    // this.editForm.value.img=this.base64;
-    console.log(this.editForm.value);
-     this.httpClient.post(url, this.editForm.value).subscribe(res=>{this.Persona!=res,
-    this.ngOnInit();
-  })
-    this.modalService.dismissAll();
+ editar() {
+  const editURL = 'http://localhost:8080/personas/' + 'editar/'  + this.editForm.value.id ;
+  this.httpClient.put(editURL, this.editForm.value)
+    .subscribe((results) => {
+      this.ngOnInit();
+      this.modalService.dismissAll();
+    });
   }
+
   
 
-  openDelete(targetModal, persona:Persona) {
+  borrar(targetModal, persona:Persona) {
     this.deleteId= persona.id;
     this.modalService.open(targetModal, {
       backdrop: 'static',
@@ -100,7 +105,7 @@ obtener($event:any){
     });
   }
 
-  onDelete() {
+  modalBorrar() {
     const deleteURL = 'http://localhost:8080/personas/' +  'borrar/'+ this.deleteId ;
     this.httpClient.delete(deleteURL)
       .subscribe((results) => {
@@ -110,13 +115,7 @@ obtener($event:any){
   }
 
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

@@ -1,9 +1,9 @@
 export class Resumen {
     id:number;
-    puesto:String;
-    organismo:String;
+    puesto:string;
+    organismo:string;
     fechaIni:any;
     fechaFin:any;
-    descripcion:String;
+    descripcion:string;
   
 }

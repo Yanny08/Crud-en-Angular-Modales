@@ -10,13 +10,9 @@ export class ResumenService {
 
   URL = 'http://localhost:8080/resumen/';
 
-  // private _refresh$= new Subject<void>();
-  
   constructor(private http: HttpClient) { }
 
-  // get refresh$(){
-  //   return this._refresh$;
-  // }
+ 
 
   public getResumen()  {
     return this.http.get<Resumen[]>(this.URL + 'traer');
@@ -26,11 +22,7 @@ export class ResumenService {
   }
   public addResumen(resumen:Resumen) {
     return this.http.post<Resumen>(this.URL + 'crear', resumen);
-    // .pipe(
-    //   tap(()=>{
-    //     this._refresh$.next();
-    //   })
-    // )
+  
   }
 
   public deleteResumen(id: any) {
@@ -39,11 +31,7 @@ export class ResumenService {
 
   public updateResumen(resumen: Resumen) {
     return this.http.put<Resumen>(this.URL + 'editar/'+ resumen.id,resumen)
-    // .pipe(
-    //   tap(()=>{
-    //     this._refresh$.next();
-    //   })
-    // )
+   
   }
  
 }
